@@ -12,6 +12,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 
 #include "note.h"
 
@@ -34,7 +35,25 @@ int main(void)
 
         /* запрос номера телефона */
         printf("\nВведите номер телефона для поиска: ");
-        fgets(query, TELE_LEN, stdin);
+        if (fgets(query, TELE_LEN, stdin) != NULL)
+                query[strcspn(query, "\n")] = '\0';
+
+        /* поиск и вывод результата */
+        found = blocknote_search(book, query);
+        if (found != NULL) {
+                printf("\nЗапись найдена:\n");
+                note_print(found);
+        } else {
+                printf("\nЧеловек с номером телефона \"%s\" не найден.\n",
+                       query);
+        }
+
+        /* Сбрасываем буфер перед fgets */
+        while (getchar() != '\n')
+                ;
+
+        if (fgets(query, TELE_LEN, stdin) != NULL)
+                query[strcspn(query, "\n")] = '\0';  /* убираем '\n' */
 
         /* поиск и вывод результата */
         found = blocknote_search(book, query);
