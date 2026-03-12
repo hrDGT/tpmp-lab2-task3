@@ -32,7 +32,6 @@ static int date_cmp(const DATE *a, const DATE *b)
 void note_input(NOTE *note)
 {
         printf("Фамилия и инициалы: ");
-        /* fgets сохраняет '\n', убираем его */
         if (fgets(note->name, NAME_LEN, stdin) != NULL)
                 note->name[strcspn(note->name, "\n")] = '\0';
 
@@ -48,6 +47,10 @@ void note_input(NOTE *note)
 
         printf("День рождения: ");
         scanf("%d", &note->date.day);
+
+        /* Сбрасываем '\n', оставшийся после scanf, */
+        while (getchar() != '\n')
+                ;
 }
 
 /*
