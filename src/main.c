@@ -34,7 +34,7 @@ int main(void)
 
         /* запрос номера телефона */
         printf("\nВведите номер телефона для поиска: ");
-        fgets(query, TELE_LEN, stdin)
+        fgets(query, TELE_LEN, stdin);
 
         /* поиск и вывод результата */
         found = blocknote_search(book, query);
